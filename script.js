@@ -1,19 +1,24 @@
 async function getSongs() {
-    let a = await fetch('http://127.0.0.1:3000/Songs/')
-    let response = await a.text()
-    // console.log(response)
-    let div = document.createElement("div")
-    div.innerHTML = response
-    let as = div.getElementsByTagName("a")
-    // console.log(as)
-    let songs = []
-    for (let index = 0; index < as.length; index++) {
-        const element = as[index];
-        if (element.href.endsWith(".mp3")) {
-            songs.push(element.href)
+    try {
+        let a = await fetch('http://127.0.0.1:3000/Songs/')
+        let response = await a.text()
+        // console.log(response)
+        let div = document.createElement("div")
+        div.innerHTML = response
+        let as = div.getElementsByTagName("a")
+        // console.log(as)
+        let songs = []
+        for (let index = 0; index < as.length; index++) {
+            const element = as[index];
+            if (element.href.endsWith(".mp3")) {
+                songs.push(element.href)
+            }
         }
+        return songs  
+    } catch (error) {
+         console.error("Song fetch failed ");
+        return [];
     }
-    return songs
 }
 
 
@@ -229,5 +234,6 @@ async function main() {
 
 const audio = new Audio()
 let currSong = null
+
 
 main()
